@@ -87,6 +87,7 @@ export default function Hero() {
               <img src={SearchMob} alt="Search" />
             </picture>
           </button>
+          
         </div>
 
       
