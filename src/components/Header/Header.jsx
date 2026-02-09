@@ -1,7 +1,8 @@
+// Header.jsx
 import React, { useState } from 'react';
 import style from './Header.module.css';
-
 import Container from '../Container/Container';
+import Modal from '../Modal/Modal';
 
 import logoMob from '../../images/header/header_logo_mob.png';
 import logoTab from '../../images/header/header_logo_tab.png';
@@ -11,6 +12,7 @@ import UserTabAndMob from '../../images/header/header_user_tab_and_mob.png';
 
 export default function Header() {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false); // стан модалки
 
   const NavAuth = ({ isMobile }) => (
     <>
@@ -35,7 +37,10 @@ export default function Header() {
       </nav>
 
       <div className={isMobile ? style.header__mobile__auth : style.header__auth}>
-        <button className={isMobile ? style.header__mobile__btn : style.header__btn}>
+        <button
+          className={isMobile ? style.header__mobile__btn : style.header__btn}
+          onClick={() => setModalOpen(true)} 
+        >
           Sign Up
         </button>
         <picture>
@@ -57,14 +62,12 @@ export default function Header() {
             <img src={logoMob} alt="Weather logo" />
           </picture>
 
-      
           <NavAuth isMobile={false} />
 
-       
           <div className={style.mobile__icon}>
-            <p className={style.mobile__icon__text}>Menu</p>
+            <p className={style.mobile__text}>Menu</p>
             <button
-              className={style.mobile__icon__btn}
+              className={style.mobile__btn}
               onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
             >
               ˅
@@ -73,7 +76,6 @@ export default function Header() {
         </div>
       </Container>
 
-
       {isMobileMenuOpen && (
         <div className={style.header__mobile}>
           <Container>
@@ -81,6 +83,9 @@ export default function Header() {
           </Container>
         </div>
       )}
+
+     
+      {isModalOpen && <Modal closeModal={() => setModalOpen(false)} />}
     </header>
   );
 }
