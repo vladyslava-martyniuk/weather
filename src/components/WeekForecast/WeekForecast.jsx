@@ -23,7 +23,7 @@ export default function WeatherDailyList({ city, apiKey }) {
           return;
         }
 
-        // Беремо по одному запису на день (кожні 8 записів = 24 години)
+     
         const dailyData = data.list
           .filter((_, index) => index % 8 === 0)
           .slice(0, 8)

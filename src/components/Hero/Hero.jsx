@@ -5,8 +5,8 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import SearchDesk from "../../images/hero/hero__search__desk.svg";
 import SearchTab from "../../images/hero/hero__search__tab.svg";
 import SearchMob from "../../images/hero/hero__search__mob.svg";
-
-export default function Hero({ city, setCity, apiKey }) {
+const apiKey = "fe80c4a0f8d5fcbbae93e1e73369700f"
+export default function Hero({ city, setCity }) {
   const [input, setInput] = useState("");
   const [weatherList, setWeatherList] = useState([]);
   const [favorites, setFavorites] = useState([]);
