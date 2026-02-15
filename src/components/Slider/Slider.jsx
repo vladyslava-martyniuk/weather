@@ -1,5 +1,6 @@
 import { useState } from "react";
 import style from "./Slider.module.css";
+import Container from "../Container/Container";
 
 import img1 from "../../images/slider/slider_mountins.jpg";
 import img2 from "../../images/slider/slider_rock.jpg";
@@ -19,29 +20,39 @@ export default function Slider() {
   };
 
   return (
+    <section className={style.slider}>
     <div className={style.slider}>
-      <button onClick={prev} className={style.prev}>‹</button>
+       
+      <Container>
+          <h2 className={style.slider__title}>Beautiful nature</h2>
 
-      <div className={style.track}>
-        {slides.map((img, i) => {
-          let position = "next";
-          if (i === index) position = "active";
-          if (
-            i === index - 1 ||
-            (index === 0 && i === slides.length - 1)
-          ) {
-            position = "prev";
-          }
+        <div className={style.slider__buttons}>
+          <button onClick={prev} className={style.prev}>‹</button>
 
-          return (
-            <div key={i} className={`${style.slide} ${style[position]}`}>
-              <img src={img} alt="" />
-            </div>
-          );
-        })}
-      </div>
+          <div className={style.track}>
+            {slides.map((img, i) => {
+              let position = "next";
+              if (i === index) position = "active";
+              if (
+                i === index - 1 ||
+                (index === 0 && i === slides.length - 1)
+              ) {
+                position = "prev";
+              }
 
-      <button onClick={next} className={style.next}>›</button>
+              return (
+                <div key={i} className={`${style.slide} ${style[position]}`}>
+                  <img src={img} alt="" />
+                </div>
+              );
+            })}
+          </div>
+
+          <button onClick={next} className={style.next}>›</button>
+        </div>
+
+      </Container>
     </div>
+    </section>
   );
 }

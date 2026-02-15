@@ -28,14 +28,20 @@ export default function WeatherCard({
   return (
     <div className={style.card}>
       <h2>{data.name}</h2>
-    
-        {data && <p className={style.country}>Country: {data.sys.country}</p>}
-      <p>{getWeatherEmoji(data.weather[0].main)} {data.weather[0].description}</p>
-      <p>🌡 {Math.round(data.main.temp)}°C</p>
+      {data && <p className={style.country}>Country: {data.sys.country}</p>}
+      
+      <p>
+        <span className={style.weatherEmoji}>{getWeatherEmoji(data.weather[0].main)}</span>
+        <span>{data.weather[0].description}</span>
+      </p>
+      
+      <p>
+        <span className={style.temperature}>🌡 {Math.round(data.main.temp)}°C</span>
+      </p>
+      
       <p>🕒 {time}</p>
 
       <div className={style.buttons}>
-   
         <button
           onClick={() =>
             isFavorite ? onRemoveFavorite(data.name) : onAddFavorite(data)
@@ -45,9 +51,17 @@ export default function WeatherCard({
           ❤️
         </button>
 
-        <button onClick={() => onDelete(data.name)}>🗑 Delete</button>
-        <button onClick={() => onShowHourly(data.name)}>🕒 Hourly Forecast</button>
-        <button onClick={() => onShowDaily(data.name)}>📅 5-Day Forecast</button>
+        <button onClick={() => onDelete(data.name)}>
+          🗑 Delete
+        </button>
+        
+        <button onClick={() => onShowHourly(data.name)}>
+          🕒 Hourly
+        </button>
+        
+        <button onClick={() => onShowDaily(data.name)}>
+          📅 5-Day
+        </button>
       </div>
     </div>
   );

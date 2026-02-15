@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useState } from 'react';
 import style from './Header.module.css';
 import Container from '../Container/Container';
@@ -10,9 +9,9 @@ import logoDesk from '../../images/header/header_logo_desk.png';
 import UserDesk from '../../images/header/header_user_desk.png';
 import UserTabAndMob from '../../images/header/header_user_tab_and_mob.png';
 
-export default function Header() {
+export default function Header({ setIsLogged }) {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isModalOpen, setModalOpen] = useState(false); // стан модалки
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const NavAuth = ({ isMobile }) => (
     <>
@@ -39,10 +38,11 @@ export default function Header() {
       <div className={isMobile ? style.header__mobile__auth : style.header__auth}>
         <button
           className={isMobile ? style.header__mobile__btn : style.header__btn}
-          onClick={() => setModalOpen(true)} 
+          onClick={() => setModalOpen(true)}
         >
           Sign Up
         </button>
+
         <picture>
           <source srcSet={UserDesk} media="(min-width: 1024px)" />
           <source srcSet={UserTabAndMob} media="(min-width: 768px)" />
@@ -84,8 +84,12 @@ export default function Header() {
         </div>
       )}
 
-     
-      {isModalOpen && <Modal closeModal={() => setModalOpen(false)} />}
+      {isModalOpen && (
+        <Modal
+          closeModal={() => setModalOpen(false)}
+          setIsLogged={setIsLogged}
+        />
+      )}
     </header>
   );
 }

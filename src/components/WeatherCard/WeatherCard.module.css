@@ -1,0 +1,124 @@
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  display: block;
+  width: 260px;
+  color: white;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+@media screen  and (min-width: 768px) {
+  .card {
+    padding: 10px;
+    width: 250px;
+  }
+    
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card h2 {
+  font-size: 24px;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.country {
+  font-size: 14px;
+  opacity: 0.8;
+  margin: 0 0 15px 0;
+}
+
+.card p {
+  margin: 8px 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.weatherEmoji {
+  font-size: 24px;
+}
+
+.temperature {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+
+  .buttons {
+    flex-direction: column;
+  }
+  .buttons button {
+    width: 100%;
+    min-width: 100%;
+  }
+  .heart {
+    width: 100% !important;
+  }
+
+
+/* Планшет / десктоп — в рядок */
+@media (min-width: 768px) {
+  .buttons {
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+  .buttons button {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+  }
+  .heart {
+    flex: 0 0 auto;
+  }
+}
+
+.buttons button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  padding: 8px 15px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.buttons button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.heart {
+  font-size: 18px;
+  padding: 8px 12px !important;
+}
+
+.favActive {
+  background: rgba(255, 0, 0, 0.3) !important;
+  border-color: #ff6b6b !important;
+}
+
+.favInactive {
+  opacity: 0.7;
+}

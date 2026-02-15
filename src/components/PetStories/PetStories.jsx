@@ -52,24 +52,27 @@ export default function PetStories() {
   return (
     <section className={style.petStories}>
       <Container>
-        <h2>Pet Stories</h2>
+        <h2 
+          className={style.petStories__title}
+        >Pet Stories</h2>
 
         {loading && page === 1 && <p>Loading...</p>}
         {error && <p>Error: {error.message}</p>}
         {!loading && petStories.length === 0 && <p>No stories found</p>}
 
         {petStories.length > 0 && (
-          <div  className={style.petStories__grid}>
+          <div className={style.petStories__grid}>
             {petStories.map(story => (
               <div key={story.url} className={style.petStories__item}>
                 {story.image && (
                   <img src={story.image} alt={story.title} />
                 )}
-                <h3>{story.title}</h3>
-                <a href={story.url} target="_blank" rel="noopener noreferrer">
-                  {story.title}
-                </a>
-             
+
+                <h3>
+                  <a href={story.url} target="_blank" rel="noopener noreferrer">
+                    {story.title}
+                  </a>
+                </h3>
               </div>
             ))}
           </div>

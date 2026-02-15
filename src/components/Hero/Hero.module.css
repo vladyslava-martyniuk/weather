@@ -1,0 +1,182 @@
+/* ================= HERO ================= */
+.hero {
+  position: relative;
+  padding-top: 140px;
+  padding-bottom: 40px; /* фон закінчується після інпуту */
+  background-image: url("../../images/hero/hero__bg__mob.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  text-align: center;
+  color: white;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.55) 0%,
+    rgba(0,0,0,0.35) 40%,
+    rgba(0,0,0,0.6) 100%
+  );
+  z-index: 0;
+}
+
+.hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* TITLE */
+.hero__main__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* TEXT */
+.hero__text {
+  font-size: 14px;
+  max-width: 320px;
+  margin: 0 auto 16px;
+  opacity: 0.9;
+}
+
+/* DATE */
+.hero__date {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 14px;
+  margin-bottom: 28px;
+  opacity: 0.8;
+}
+
+/* SEARCH */
+.search {
+  margin: 0 auto 40px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 280px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  background: transparent;
+}
+
+.search button {
+  border: none;
+  background: #f5a623;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ERROR */
+.error {
+  color: #ffd1d1;
+  margin-bottom: 20px;
+}
+
+/* ================= CARDS ================= */
+.cardsContainer {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr; /* мобільні — одна картка */
+  gap: 20px;
+}
+
+/* Планшет: 768px+ */
+@media (min-width: 768px) {
+  .hero {
+    background-image: url("../../images/hero/hero__bg__tab.jpg");
+    padding-top: 160px;
+    padding-bottom: 50px;
+  }
+
+  .hero__main__title {
+    font-size: 40px;
+  }
+
+  .hero__text {
+    font-size: 16px;
+    max-width: 420px;
+  }
+
+  .hero__date {
+    font-size: 16px;
+  }
+
+  .search {
+    max-width: 420px;
+  }
+
+  .search input {
+    padding: 14px 20px;
+    font-size: 16px;
+  }
+
+  .search button {
+    padding: 14px 18px;
+  }
+
+  .cardsContainer {
+    grid-template-columns: repeat(2, 1fr); /* дві картки */
+    gap: 25px;
+  }
+}
+
+/* Десктоп: 1024px+ */
+@media (min-width: 1024px) {
+  .hero {
+    background-image: url("../../images/hero/hero__bg__desk.jpg");
+    padding-top: 180px;
+    padding-bottom: 60px;
+  }
+
+  .hero__main__title {
+    font-size: 48px;
+  }
+
+  .hero__text {
+    font-size: 18px;
+    max-width: 520px;
+  }
+
+  .hero__date {
+    font-size: 18px;
+  }
+
+  .search {
+    max-width: 520px;
+  }
+
+  .search input {
+    padding: 16px 24px;
+    font-size: 18px;
+  }
+
+  .search button {
+    padding: 16px 22px;
+  }
+
+  .cardsContainer {
+    grid-template-columns: repeat(3, 1fr); /* три картки */
+    gap: 30px;
+    margin-top: 60px;
+  }
+}

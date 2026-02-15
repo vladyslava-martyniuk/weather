@@ -19,7 +19,7 @@ export default function Footer() {
                 <picture>
                     <source srcSet={LogoDesk} media="(min-width: 1024px)" />
                     <source srcSet={LogoTab} media="(min-width: 768px)" />
-                    <img src={LogoTab} alt="Logo" />
+                    <img className={style.footer__logo} src={LogoTab} alt="Logo" />
                 </picture>
                 <address>
                     <p className={style.address__title}>Address</p>

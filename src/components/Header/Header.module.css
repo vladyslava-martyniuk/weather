@@ -1,0 +1,168 @@
+.header {
+  width: 100%;
+  position: relative;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+  z-index: 100;
+}
+
+.header__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+}
+
+/* ================= DESKTOP NAV ================= */
+
+.header__nav {
+  display: none;
+}
+
+.header__list {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.header__link {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.header__link:hover {
+  color: #f5a623;
+}
+
+/* ================= AUTH ================= */
+
+.header__auth {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background-color: #f5a623;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.header__btn:hover {
+  background-color: #d4881c;
+}
+
+/* ================= MOBILE ================= */
+
+.mobile__icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.mobile__text {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mobile__btn {
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* MOBILE MENU */
+
+.header__mobile {
+  width: 100%;
+  background: #fafafa;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+}
+
+
+
+.header__mobile__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+
+
+.header__mobile__link {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.header__mobile__auth {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header__mobile__btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: none;
+  background-color: #f5a623;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ================= TABLET ================= */
+
+@media (min-width: 768px) {
+  .header__nav {
+    display: block;
+  }
+
+  .header__auth {
+    display: flex;
+  }
+
+  .mobile__icon {
+    display: none;
+  }
+
+  .header__mobile {
+    display: none;
+  }
+}
+
+/* ================= DESKTOP ================= */
+
+@media (min-width: 1024px) {
+  .header__main {
+    padding: 20px 0;
+  }
+
+  .header__list {
+    gap: 40px;
+  }
+
+  .header__link {
+    font-size: 18px;
+  }
+}
