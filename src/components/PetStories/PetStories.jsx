@@ -3,7 +3,7 @@ import style from "./PetStories.module.css";
 import Container from "../Container/Container";
 
 export default function PetStories() {
-  VITE_GNEWS_API_KEY="fb4ca7661702bbf817afaa3fb7625496";
+  const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
 
   const [petStories, setPetStories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function PetStories() {
 
       try {
         const response = await fetch(
-          `https://gnews.io/api/v4/search?q=pet OR dog OR cat&lang=en&max=5&page=${page}&token=${VITE_GNEWS_API_KEY}`
+          `https://gnews.io/api/v4/search?q=pet OR dog OR cat&lang=en&max=5&page=${page}&token=${API_KEY}`
         );
 
         const data = await response.json();
@@ -52,9 +52,7 @@ export default function PetStories() {
   return (
     <section className={style.petStories}>
       <Container>
-        <h2 
-          className={style.petStories__title}
-        >Pet Stories</h2>
+        <h2 className= {style.petStories__title}>Pet Stories</h2>
 
         {loading && page === 1 && <p>Loading...</p>}
         {error && <p>Error: {error.message}</p>}
@@ -69,7 +67,7 @@ export default function PetStories() {
                 )}
 
                 <h3>
-                  <a  classNamehref={story.url} target="_blank" rel="noopener noreferrer">
+                  <a className={style.petStories__link} href={story.url} target="_blank" rel="noopener noreferrer">
                     {story.title}
                   </a>
                 </h3>
@@ -79,7 +77,7 @@ export default function PetStories() {
         )}
 
         {hasMore && (
-          <button className={style.petStories__btn} onClick={handleLoadMore} disabled={loading}>
+          <button onClick={handleLoadMore} disabled={loading}>
             {loading ? "Loading..." : "Load More"}
           </button>
         )}
