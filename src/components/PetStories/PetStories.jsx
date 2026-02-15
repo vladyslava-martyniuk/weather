@@ -69,7 +69,7 @@ export default function PetStories() {
                 )}
 
                 <h3>
-                  <a href={story.url} target="_blank" rel="noopener noreferrer">
+                  <a  className={style.petStories__link} href={story.url} target="_blank" rel="noopener noreferrer">
                     {story.title}
                   </a>
                 </h3>
@@ -79,7 +79,7 @@ export default function PetStories() {
         )}
 
         {hasMore && (
-          <button onClick={handleLoadMore} disabled={loading}>
+          <button className={style.petStories__btn} onClick={handleLoadMore} disabled={loading}>
             {loading ? "Loading..." : "Load More"}
           </button>
         )}

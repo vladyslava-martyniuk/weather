@@ -1,2 +1,56 @@
-.petStories__title {
+.petStories {
+   display: none; /* ховаємо на мобільних */
+}
+
+@media (min-width: 1024px) {
+   .petStories {
+      display: block; /* показуємо на десктопі */
+      padding-top: 30px;
+      padding-bottom: 30px;
+   }
+
+   .petStories__grid {
+      display: flex;
+      flex-wrap: wrap; /* дозволяє переносити на наступний рядок */
+      gap: 20px; /* відстань між картинками */
+   }
+
+   .petStories__item {
+      flex: 1 1 200px; /* ширина мінімум 200px, росте, щоб зайняти простір */
+      max-width: 250px; /* обмежуємо максимальну ширину */
+      text-align: center;
+   }
+
+   .petStories__item img {
+      width: 100%; /* зменшуємо картинку до ширини контейнера */
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+   }
+
+   .petStories__title {
+      margin-bottom: 20px;
+      text-align: center;
+   }
+
+   .petStories__btn {
+      display: block;
+      margin: 20px auto 0;
+      border-radius: 20px;
+      border: none;
+      background-color: #f5a623;
+      color: #000;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+   }
+}
     
+.petStories__link {
+   text-decoration: none;
+   color: #333;
+   transition: color 0.3s ease;
+}
+.petStories__link:hover {
+   color: #f5a623;
+}
