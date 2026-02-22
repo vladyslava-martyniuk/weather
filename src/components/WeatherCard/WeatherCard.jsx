@@ -6,8 +6,8 @@ export default function WeatherCard({
   onAddFavorite,
   onRemoveFavorite,
   onDelete,
-  onShowHourly,
-  onShowDaily
+  onSelectCity, // функція для оновлення активного міста
+  activeCity
 }) {
   const time = new Date(data.dt * 1000).getHours() + ":00";
 
@@ -25,20 +25,24 @@ export default function WeatherCard({
     }
   };
 
+  const isActive = activeCity === data.name;
+
   return (
-    <div className={style.card}>
+    <div className={`${style.card} ${isActive ? style.activeCard : ""}`}>
       <h2>{data.name}</h2>
-      {data && <p className={style.country}>Country: {data.sys.country}</p>}
-      
+      <p className={style.country}>Country: {data.sys.country}</p>
+
       <p>
-        <span className={style.weatherEmoji}>{getWeatherEmoji(data.weather[0].main)}</span>
+        <span className={style.weatherEmoji}>
+          {getWeatherEmoji(data.weather[0].main)}
+        </span>
         <span>{data.weather[0].description}</span>
       </p>
-      
-      <p>
-        <span className={style.temperature}>🌡 {Math.round(data.main.temp)}°C</span>
+
+      <p className={style.temperature}>
+        🌡 {Math.round(data.main.temp)}°C
       </p>
-      
+
       <p>🕒 {time}</p>
 
       <div className={style.buttons}>
@@ -46,22 +50,17 @@ export default function WeatherCard({
           onClick={() =>
             isFavorite ? onRemoveFavorite(data.name) : onAddFavorite(data)
           }
-          className={`${style.heart} ${isFavorite ? style.favActive : style.favInactive}`}
+          className={`${style.heart} ${
+            isFavorite ? style.favActive : style.favInactive
+          }`}
         >
           ❤️
         </button>
+      
+        <button onClick={() => onDelete(data.id)}>🗑 </button>
 
-        <button onClick={() => onDelete(data.name)}>
-          🗑 Delete
-        </button>
-        
-        <button onClick={() => onShowHourly(data.name)}>
-          🕒 Hourly
-        </button>
-        
-        <button onClick={() => onShowDaily(data.name)}>
-          📅 5-Day
-        </button>
+    
+        <button onClick={() => onSelectCity(data.name)}>⭐</button>
       </div>
     </div>
   );

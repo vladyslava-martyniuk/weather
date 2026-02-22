@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./App.css";
 import Header from "./components/Header/Header";
 import Hero from "./components/Hero/Hero";
 import WeatherMore from "./components/WeatherMore/WeatherMore";
@@ -8,22 +9,36 @@ import PetStories from "./components/PetStories/PetStories";
 import Slider from "./components/Slider/Slider";
 import Footer from "./components/Footer/Footer";
 
-
 function App() {
-  const [city, setCity] = useState("Kyiv");
-  const [isLogged, setIsLogged] = useState(false);
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+  const [city, setCity] = useState("Kyiv");
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [weatherList, setWeatherList] = useState([]);
+  const [isLogged, setIsLogged] = useState(false);
 
   return (
     <>
-      <Header setIsLogged={setIsLogged} />
+      <Header isLogged={isLogged} setIsLogged={setIsLogged} />
 
       <main>
-        <Hero city={city} setCity={setCity} apiKey={API_KEY} />
+        {/* Hero тільки пошук + картки */}
+        <Hero
+          city={city}
+          setCity={setCity}
+          setSelectedCity={setSelectedCity}
+          apiKey={API_KEY}
+          weatherList={weatherList}
+          setWeatherList={setWeatherList}
+        />
 
-        {isLogged && <WeatherMore city={city} apiKey={API_KEY} />}
-        {isLogged && <DayForecast city={city} apiKey={API_KEY} />}
-        {isLogged && <WeekForecast city={city} apiKey={API_KEY} />}
+        {/* Секції під Hero */}
+        {isLogged && (
+          <div style={{ marginTop: "3rem" }}>
+            <WeatherMore city={selectedCity || city} apiKey={API_KEY} />
+            <DayForecast city={selectedCity || city} apiKey={API_KEY} />
+            <WeekForecast city={selectedCity || city} apiKey={API_KEY} />
+          </div>
+        )}
 
         <PetStories />
         <Slider />
@@ -35,7 +50,4 @@ function App() {
 }
 
 export default App;
-
-
-
 

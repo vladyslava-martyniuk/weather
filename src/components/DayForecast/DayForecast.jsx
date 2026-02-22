@@ -1,11 +1,15 @@
 
 import React, { useState, useEffect } from "react";
+
+import Container from "../Container/Container";
+
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
-  Tooltip
+  Tooltip,
+  ResponsiveContainer
 } from "recharts";
 import style from "./DayForecast.module.css";
 
@@ -51,34 +55,40 @@ export default function WeatherHourlyChart({ city, apiKey }) {
   if (!forecast.length) return null;
 
   return (
-    <section className={style.weatherHourlyChart}>
-      <h3 className={style.chartTitle}>Hourly Forecast for {city}</h3>
-      <LineChart
-        width={600}
-        height={250}
-        data={forecast}
-        margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-      >
-        <XAxis dataKey="time" axisLine={false} tickLine={false} />
-        <YAxis
-          tickFormatter={(v) => `${v}°`}
-          axisLine={false}
-          tickLine={false}
-        />
-        <Tooltip
-          contentStyle={{ borderRadius: "12px", border: "none" }}
-          formatter={(value) => `${value}°C`}
-        />
-        <Line
-          type="monotone"
-          dataKey="temp"
-          stroke="#FFC107"
-          strokeWidth={3}
-          dot={{ r: 4 }}
-          activeDot={{ r: 7 }}
-          animationDuration={1500}
-        />
-      </LineChart>
+    <section id="hourlyForecast" className={style.weatherHourlyChart}>
+      <Container>
+        <div className={style.chartWrapper}>
+          <h3 className={style.chartTitle}>Hourly Forecast for {city}</h3>
+
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart
+              data={forecast}
+              margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
+            >
+              <XAxis dataKey="time" axisLine={false} tickLine={false} />
+              <YAxis
+                tickFormatter={(v) => `${v}°`}
+                axisLine={false}
+                tickLine={false}
+              />
+              <Tooltip
+                contentStyle={{ borderRadius: "12px", border: "none" }}
+                formatter={(value) => `${value}°C`}
+              />
+              <Line
+                type="monotone"
+                dataKey="temp"
+                stroke="#FFC107"
+                strokeWidth={3}
+                dot={{ r: 4 }}
+                activeDot={{ r: 7 }}
+                animationDuration={1500}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+
+        </div>
+      </Container>
     </section>
   );
 }

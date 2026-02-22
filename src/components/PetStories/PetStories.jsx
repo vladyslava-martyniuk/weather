@@ -24,8 +24,16 @@ export default function PetStories() {
         const data = await response.json();
 
         if (data.articles && data.articles.length > 0) {
-          setPetStories(prev => [...prev, ...data.articles]);
+          setPetStories(prev => {
+            const merged = [...prev, ...data.articles];
+            // прибираємо дублікати по url
+            const unique = Array.from(
+              new Map(merged.map(a => [a.url, a])).values()
+            );
+            return unique;
+          });
 
+          // Якщо менше ніж 5 статей — більше новин немає
           if (data.articles.length < 5) {
             setHasMore(false);
           }
@@ -52,7 +60,7 @@ export default function PetStories() {
   return (
     <section className={style.petStories}>
       <Container>
-        <h2 className= {style.petStories__title}>Pet Stories</h2>
+        <h2 className={style.petStories__title}>Pet Stories</h2>
 
         {loading && page === 1 && <p>Loading...</p>}
         {error && <p>Error: {error.message}</p>}
@@ -60,14 +68,26 @@ export default function PetStories() {
 
         {petStories.length > 0 && (
           <div className={style.petStories__grid}>
-            {petStories.map(story => (
-              <div key={story.url} className={style.petStories__item}>
-                {story.image && (
+            {petStories.map((story, index) => (
+              <div
+                key={`${story.url}-${index}`}
+                className={style.petStories__item}
+              >
+                {story.image ? (
                   <img src={story.image} alt={story.title} />
+                ) : (
+                  <div className={style.placeholder}>
+                    Image Not Found
+                  </div>
                 )}
 
                 <h3>
-                  <a className={style.petStories__link} href={story.url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className={style.petStories__link}
+                    href={story.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {story.title}
                   </a>
                 </h3>
@@ -76,8 +96,12 @@ export default function PetStories() {
           </div>
         )}
 
-        {hasMore && (
-          <button onClick={handleLoadMore} disabled={loading}>
+        {hasMore && petStories.length > 0 && (
+          <button
+            className={style.petStories__btn}
+            onClick={handleLoadMore}
+            disabled={loading}
+          >
             {loading ? "Loading..." : "Load More"}
           </button>
         )}

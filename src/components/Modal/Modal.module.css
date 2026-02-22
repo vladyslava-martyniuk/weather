@@ -1,0 +1,191 @@
+/* ================= MOBILE BASE ================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999;
+}
+
+/* MODAL */
+
+.modal {
+  background: #f2f2f2;
+  border-radius: 16px;
+  width: 95%;
+  max-width: 100%;
+}
+
+/* CONTENT */
+
+.modal__main {
+  padding: 20px 14px;
+  text-align: center;
+}
+
+/* TITLE */
+
+.modal__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* LABEL */
+
+.modal__label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+/* INPUT */
+
+.modal__input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 14px;
+
+  border: none;
+  border-radius: 8px;
+  background: #ddd;
+  outline: none;
+}
+
+/* BUTTON */
+
+.modal__btn {
+  background: #f5a25d;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modal__btn:hover {
+  transform: scale(1.05);
+}
+
+/* TEXT */
+
+.modal__text {
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.modal__text a {
+  color: #000;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* ================= ANIMATION ================= */
+
+.open {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.modalOpen {
+  animation: modalEnter 0.35s ease forwards;
+}
+
+.closing {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+.modalClosing {
+  animation: modalExit 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes modalExit {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+}
+
+/* ================= TABLET 768+ ================= */
+
+@media (min-width: 768px) {
+
+  .modal {
+    width: 80%;
+    max-width: 500px;
+    border-radius: 20px;
+  }
+
+  .modal__main {
+    padding: 30px;
+  }
+
+  .modal__title {
+    font-size: 22px;
+  }
+
+  .modal__input {
+    padding: 11px;
+  }
+
+  .modal__text {
+    font-size: 13px;
+  }
+}
+
+/* ================= DESKTOP 1024+ ================= */
+
+@media (min-width: 1024px) {
+
+  .modal {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .modal__main {
+    padding: 40px;
+  }
+
+  .modal__title {
+    font-size: 24px;
+  }
+
+  .modal__input {
+    padding: 12px;
+  }
+
+  .modal__text {
+    font-size: 14px;
+  }
+}

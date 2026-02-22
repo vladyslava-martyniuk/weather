@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import style from "./WeekForecast.module.css";
+import Container from "../Container/Container";
 
 export default function WeatherDailyList({ city, apiKey }) {
   const [forecast, setForecast] = useState([]);
@@ -55,7 +56,8 @@ export default function WeatherDailyList({ city, apiKey }) {
   if (!forecast.length) return null;
 
   return (
-    <section className={style.forecastBlock}>
+    <section className={style.forecastBlock} id="weeklyForecast">
+      <Container>
       <h3 className={style.title}>8-day Forecast for {city}</h3>
 
       {forecast.map((day) => (
@@ -75,7 +77,9 @@ export default function WeatherDailyList({ city, apiKey }) {
 
           <span className={style.desc}>{day.description}</span>
         </div>
-      ))}
+      
+      ))}  
+      </Container>
     </section>
   );
 }

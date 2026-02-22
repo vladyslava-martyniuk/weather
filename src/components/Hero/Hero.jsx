@@ -6,26 +6,25 @@ import SearchDesk from "../../images/hero/hero__search__desk.svg";
 import SearchTab from "../../images/hero/hero__search__tab.svg";
 import SearchMob from "../../images/hero/hero__search__mob.svg";
 
-export default function Hero({ city, setCity, apiKey }) {
+export default function Hero({ city, setCity, selectedCity, setSelectedCity, apiKey, weatherList, setWeatherList }) {
   const [input, setInput] = useState("");
-  const [weatherList, setWeatherList] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState("");
 
-  // Завантаження фаворитів
+  // Підтягуємо Kyiv при першому рендері
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
+
+    if (weatherList.length === 0) {
+      fetchWeather("Kyiv");
+      setSelectedCity("Kyiv");
+    }
   }, []);
 
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
-
-  // Fetch при старті
-  useEffect(() => {
-    fetchWeather(city);
-  }, [city]);
 
   const fetchWeather = async (cityName) => {
     try {
@@ -36,6 +35,7 @@ export default function Hero({ city, setCity, apiKey }) {
       const data = await res.json();
 
       const formattedWeather = {
+        id: data.id,
         feels_like: Math.round(data.main.feels_like),
         temp_min: Math.round(data.main.temp_min),
         temp_max: Math.round(data.main.temp_max),
@@ -51,9 +51,7 @@ export default function Hero({ city, setCity, apiKey }) {
       };
 
       setWeatherList(prev => {
-        if (prev.some(w => w.name === formattedWeather.name)) {
-          return prev; // не додаємо дублікати
-        }
+        if (prev.some(w => w.id === formattedWeather.id)) return prev;
         return [...prev, formattedWeather];
       });
 
@@ -65,45 +63,39 @@ export default function Hero({ city, setCity, apiKey }) {
 
   const handleSearch = () => {
     if (!input.trim()) return setError("Please enter a city");
-    setCity(input.trim());
+
+    const newCity = input.trim();
+    setCity(newCity);
+    setSelectedCity(newCity); // робимо його активним
+    fetchWeather(newCity);
     setInput("");
   };
 
   const addFavorite = (city) => {
-    if (!favorites.includes(city.name)) {
-      setFavorites([...favorites, city.name]);
-    }
+    if (!favorites.includes(city.name)) setFavorites([...favorites, city.name]);
   };
 
   const removeFavorite = (cityName) => {
     setFavorites(favorites.filter((c) => c !== cityName));
   };
 
-  const deleteCity = (cityName) => {
-    setWeatherList(prev => prev.filter(w => w.name !== cityName));
+  const deleteCity = (cityId) => {
+    setWeatherList(prev => prev.filter(w => w.id !== cityId));
+
+    const removedCity = weatherList.find(w => w.id === cityId);
+    if (removedCity && selectedCity === removedCity.name) {
+      setSelectedCity(null);
+    }
   };
 
-  const showHourlyForecast = (cityName) =>
-    alert(`Hourly forecast for ${cityName}`);
-
-  const showDailyForecast = (cityName) =>
-    alert(`5-day forecast for ${cityName}`);
+  const handleSelect = (cityName) => {
+    setSelectedCity(cityName);
+  };
 
   return (
     <section className={style.hero}>
       <Container>
         <h1 className={style.hero__main__title}>Weather Dashboard</h1>
-
-        <p className={style.hero__text}>
-          Create your personal list of favorite cities and always be aware of the weather.
-        </p>
-
-        <div className={style.hero__date}>
-          <span>{new Date().toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
-          <span>
-            {new Date().toLocaleString("en-US", { weekday: "long", day: "numeric" })}
-          </span>
-        </div>
 
         <div className={style.search}>
           <input
@@ -121,20 +113,25 @@ export default function Hero({ city, setCity, apiKey }) {
             </picture>
           </button>
         </div>
-
+        <div className={style.hero__date}>
+          <span>{new Date().toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
+          <span>
+            {new Date().toLocaleString("en-US", { weekday: "long", day: "numeric" })}
+          </span>
+        </div>
         {error && <p className={style.error}>{error}</p>}
 
         <ul className={style.cardsContainer}>
           {weatherList.map((weather) => (
             <WeatherCard
-              key={weather.name}
+              key={weather.id}
               data={weather}
               isFavorite={favorites.includes(weather.name)}
               onAddFavorite={addFavorite}
               onRemoveFavorite={removeFavorite}
-              onDelete={() => deleteCity(weather.name)}
-              onShowHourly={showHourlyForecast}
-              onShowDaily={showDailyForecast}
+              onDelete={() => deleteCity(weather.id)}
+              onSelectCity={handleSelect}
+              activeCity={selectedCity} // передаємо **точне активне місто**
             />
           ))}
         </ul>

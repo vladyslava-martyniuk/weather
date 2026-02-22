@@ -1,0 +1,73 @@
+.footer {
+  background: #F4A460;
+  padding: 20px 0;
+}
+
+/* ===== Layout ===== */
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== Address ===== */
+
+.address {
+  font-style: normal;
+}
+
+.address__title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.address__text {
+  font-size: 14px;
+}
+
+/* ===== Social ===== */
+
+.social__list {
+  display: flex;
+  gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* ========================= */
+/* 📱 MOBILE */
+/* ========================= */
+
+@media (max-width: 767px) {
+  .footer__inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .social__list {
+    justify-content: center;
+  }
+}
+
+/* ========================= */
+/* 📲 TABLET */
+/* ========================= */
+
+@media (min-width: 768px) {
+  .footer__inner {
+    flex-direction: row;
+  }
+}
+
+/* ========================= */
+/* 💻 DESKTOP */
+/* ========================= */
+
+@media (min-width: 1024px) {
+  .footer__inner {
+    flex-direction: row;
+  }
+}

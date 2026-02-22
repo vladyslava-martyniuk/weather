@@ -4,32 +4,54 @@
 
 @media (min-width: 1024px) {
    .petStories {
-      display: block; /* показуємо на десктопі */
+      display: block;
       padding-top: 30px;
       padding-bottom: 30px;
    }
 
    .petStories__grid {
       display: flex;
-      flex-wrap: wrap; /* дозволяє переносити на наступний рядок */
-      gap: 20px; /* відстань між картинками */
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
    }
 
    .petStories__item {
-      flex: 1 1 200px; /* ширина мінімум 200px, росте, щоб зайняти простір */
-      max-width: 250px; /* обмежуємо максимальну ширину */
+      flex: 1 1 200px;
+      max-width: 250px;
       text-align: center;
+      transition: transform 0.3s ease;
+   }
+
+   .petStories__item:hover {
+      transform: translateY(-5px);
    }
 
    .petStories__item img {
-      width: 100%; /* зменшуємо картинку до ширини контейнера */
-      height: auto;
+      width: 100%;
+      height: 150px;
       border-radius: 10px;
       object-fit: cover;
+      background-color: #f0f0f0;
+   }
+
+   .placeholder {
+      width: 100%;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+      color: #999;
+      font-weight: bold;
+      border-radius: 10px;
+      font-size: 14px;
+      text-align: center;
+      
    }
 
    .petStories__title {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       text-align: center;
    }
 
@@ -43,14 +65,20 @@
       font-weight: 500;
       padding: 10px 20px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
+   }
+
+   .petStories__btn:hover {
+      background-color: #e5941f;
    }
 }
-    
+
 .petStories__link {
    text-decoration: none;
    color: #333;
    transition: color 0.3s ease;
 }
+
 .petStories__link:hover {
    color: #f5a623;
 }
