@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import style from "./Modal.module.css";
 import Container from "../Container/Container";
 
-export default function Modal({ closeModal, setIsLogged, existingUsers = [], setExistingUsers }) {
+export default function Modal({ closeModal, setIsLogged }) {
   const [isLogin, setIsLogin] = useState(false);
   const [closing, setClosing] = useState(false);
   const [error, setError] = useState("");
+
+ 
+  const [users, setUsers] = useState([
+    { username: "Vlad", email: "vlad@example.com", password: "123456" },
+    { username: "Anna", email: "anna@example.com", password: "password" },
+    { username: "John", email: "john@example.com", password: "qwerty" },
+  ]);
 
   const toggleForm = () => {
     setError("");
@@ -24,25 +31,33 @@ export default function Modal({ closeModal, setIsLogged, existingUsers = [], set
     const username = e.target.username?.value.trim();
     const password = e.target.password.value.trim();
 
-    const users = existingUsers || [];
+    if (!email || !password || (!isLogin && !username)) {
+      setError("Будь ласка, заповніть усі поля!");
+      return;
+    }
 
     if (isLogin) {
-      
+   
       const user = users.find((u) => u.email === email && u.password === password);
       if (!user) {
         setError("Невірний email або пароль!");
         return;
       }
     } else {
-      const userExists = users.some((u) => u.email === email || u.username === username);
-      if (userExists) {
-        setError("Користувач вже існує!");
+    
+      const emailExists = users.some((u) => u.email === email);
+      const usernameExists = users.some((u) => u.username === username);
+
+      if (emailExists) {
+        setError("Цей email вже зайнятий!");
         return;
       }
-      const newUser = { username, email, password };
-      if (setExistingUsers) {
-        setExistingUsers([...users, newUser]);
+      if (usernameExists) {
+        setError("Цей username вже зайнятий!");
+        return;
       }
+
+      setUsers([...users, { username, email, password }]);
     }
 
     setIsLogged(true);

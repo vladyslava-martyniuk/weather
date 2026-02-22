@@ -131,7 +131,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
               onRemoveFavorite={removeFavorite}
               onDelete={() => deleteCity(weather.id)}
               onSelectCity={handleSelect}
-              activeCity={selectedCity} // передаємо **точне активне місто**
+              activeCity={selectedCity} 
             />
           ))}
         </ul>
