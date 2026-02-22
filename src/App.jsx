@@ -40,7 +40,7 @@ function App() {
           </div>
         )}
 
-        <PetStories />
+        <PetStories apiKey={API_KEY_NEWS} />
         <Slider />
       </main>
 

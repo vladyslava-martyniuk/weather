@@ -3,7 +3,7 @@ import style from "./PetStories.module.css";
 import Container from "../Container/Container";
 
 export default function PetStories() {
-  const API_KEY = import.meta.env.VITE_GNEWS_API_KEY;
+  const API_KEY_NEWS = import.meta.env.VITE_GNEWS_API_KEY;
 
   const [petStories, setPetStories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ export default function PetStories() {
 
       try {
         const response = await fetch(
-          `https://gnews.io/api/v4/search?q=pet OR dog OR cat&lang=en&max=5&page=${page}&token=${API_KEY}`
+          `https://gnews.io/api/v4/search?q=pet OR dog OR cat&lang=en&max=5&page=${page}&token=${API_KEY_NEWS}`
         );
 
         const data = await response.json();
@@ -49,7 +49,7 @@ export default function PetStories() {
     };
 
     fetchPetStories();
-  }, [page, API_KEY]);
+  }, [page, API_KEY_NEWS]);
 
   const handleLoadMore = () => {
     if (!loading && hasMore) {
