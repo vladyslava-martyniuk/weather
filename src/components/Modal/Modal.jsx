@@ -2,21 +2,49 @@ import React, { useState } from "react";
 import style from "./Modal.module.css";
 import Container from "../Container/Container";
 
-export default function Modal({ closeModal, setIsLogged }) {
+export default function Modal({ closeModal, setIsLogged, existingUsers = [], setExistingUsers }) {
   const [isLogin, setIsLogin] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [error, setError] = useState("");
 
-  const toggleForm = () => setIsLogin(!isLogin);
+  const toggleForm = () => {
+    setError("");
+    setIsLogin(!isLogin);
+  };
 
   const handleClose = () => {
     setClosing(true);
-    setTimeout(() => {
-      closeModal();
-    }, 300);
+    setTimeout(() => closeModal(), 300);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const email = e.target.email.value.trim();
+    const username = e.target.username?.value.trim();
+    const password = e.target.password.value.trim();
+
+    const users = existingUsers || [];
+
+    if (isLogin) {
+      
+      const user = users.find((u) => u.email === email && u.password === password);
+      if (!user) {
+        setError("Невірний email або пароль!");
+        return;
+      }
+    } else {
+      const userExists = users.some((u) => u.email === email || u.username === username);
+      if (userExists) {
+        setError("Користувач вже існує!");
+        return;
+      }
+      const newUser = { username, email, password };
+      if (setExistingUsers) {
+        setExistingUsers([...users, newUser]);
+      }
+    }
+
     setIsLogged(true);
     handleClose();
   };
@@ -32,33 +60,29 @@ export default function Modal({ closeModal, setIsLogged }) {
       >
         <Container>
           <div className={style.modal__main}>
-            <p className={style.modal__title}>
-              {isLogin ? "Log In" : "Sign Up"}
-            </p>
+            <p className={style.modal__title}>{isLogin ? "Log In" : "Sign Up"}</p>
 
             <form onSubmit={handleSubmit}>
               {!isLogin && (
                 <>
                   <label className={style.modal__label}>Username</label>
-                  <input className={style.modal__input} type="text" />
+                  <input className={style.modal__input} type="text" name="username" required />
                 </>
               )}
 
               <label className={style.modal__label}>E-mail</label>
-              <input className={style.modal__input} type="email" />
+              <input className={style.modal__input} type="email" name="email" required />
 
               <label className={style.modal__label}>Password</label>
-              <input className={style.modal__input} type="password" />
+              <input className={style.modal__input} type="password" name="password" required />
 
-              <button className={style.modal__btn}>
-                {isLogin ? "Log In" : "Sign Up"}
-              </button>
+              {error && <p className={style.modal__error}>{error}</p>}
+
+              <button className={style.modal__btn}>{isLogin ? "Log In" : "Sign Up"}</button>
             </form>
 
             <p className={style.modal__text}>
-              {isLogin
-                ? "Don't have an account?"
-                : "Already have an account?"}{" "}
+              {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
               <a
                 href="#"
                 onClick={(e) => {
