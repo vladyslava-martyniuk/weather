@@ -2,17 +2,10 @@ import React, { useState } from "react";
 import style from "./Modal.module.css";
 import Container from "../Container/Container";
 
-export default function Modal({ closeModal, setIsLogged }) {
+export default function Modal({ closeModal, setIsLogged, users, setUsers }) {
   const [isLogin, setIsLogin] = useState(false);
   const [closing, setClosing] = useState(false);
   const [error, setError] = useState("");
-
- 
-  const [users, setUsers] = useState([
-    { username: "Vlad", email: "vlad@example.com", password: "123456" },
-    { username: "Anna", email: "anna@example.com", password: "password" },
-    { username: "John", email: "john@example.com", password: "qwerty" },
-  ]);
 
   const toggleForm = () => {
     setError("");
@@ -37,27 +30,21 @@ export default function Modal({ closeModal, setIsLogged }) {
     }
 
     if (isLogin) {
-   
       const user = users.find((u) => u.email === email && u.password === password);
       if (!user) {
         setError("Невірний email або пароль!");
         return;
       }
     } else {
-    
-      const emailExists = users.some((u) => u.email === email);
-      const usernameExists = users.some((u) => u.username === username);
-
-      if (emailExists) {
-        setError("Цей email вже зайнятий!");
-        return;
-      }
-      if (usernameExists) {
-        setError("Цей username вже зайнятий!");
+      const duplicate = users.find(
+        (u) => u.email === email || u.username === username
+      );
+      if (duplicate) {
+        setError("Користувач з таким email або username вже існує!");
         return;
       }
 
-      setUsers([...users, { username, email, password }]);
+      setUsers([...users, { username, email, password }]); // додаємо нового користувача
     }
 
     setIsLogged(true);
@@ -81,19 +68,36 @@ export default function Modal({ closeModal, setIsLogged }) {
               {!isLogin && (
                 <>
                   <label className={style.modal__label}>Username</label>
-                  <input className={style.modal__input} type="text" name="username" required />
+                  <input
+                    className={style.modal__input}
+                    type="text"
+                    name="username"
+                    required
+                  />
                 </>
               )}
 
               <label className={style.modal__label}>E-mail</label>
-              <input className={style.modal__input} type="email" name="email" required />
+              <input
+                className={style.modal__input}
+                type="email"
+                name="email"
+                required
+              />
 
               <label className={style.modal__label}>Password</label>
-              <input className={style.modal__input} type="password" name="password" required />
+              <input
+                className={style.modal__input}
+                type="password"
+                name="password"
+                required
+              />
 
               {error && <p className={style.modal__error}>{error}</p>}
 
-              <button className={style.modal__btn}>{isLogin ? "Log In" : "Sign Up"}</button>
+              <button className={style.modal__btn}>
+                {isLogin ? "Log In" : "Sign Up"}
+              </button>
             </form>
 
             <p className={style.modal__text}>

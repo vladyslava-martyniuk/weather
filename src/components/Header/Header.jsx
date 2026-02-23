@@ -9,13 +9,21 @@ import logoDesk from '../../images/header/header_logo_desk.png';
 import UserDesk from '../../images/header/header_user_desk.png';
 import UserTabAndMob from '../../images/header/header_user_tab_and_mob.png';
 
-export default function Header({ isLogged, setIsLogged }) {
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function Header() {
+  const [isLogged, setIsLogged] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Користувачі зберігаються тут, у Header
+  const [users, setUsers] = useState([
+    { username: "Vlad", email: "vlad@example.com", password: "123456" },
+    { username: "Anna", email: "anna@example.com", password: "password" },
+    { username: "John", email: "john@example.com", password: "qwerty" },
+  ]);
 
   const handleLogout = () => {
-    setIsLogged(false); // вихід користувача
-    setMobileMenuOpen(false); // закриваємо мобільне меню, якщо було відкрито
+    setIsLogged(false);
+    setMobileMenuOpen(false);
   };
 
   const NavAuth = ({ isMobile }) => (
@@ -99,7 +107,12 @@ export default function Header({ isLogged, setIsLogged }) {
       )}
 
       {isModalOpen && !isLogged && (
-        <Modal closeModal={() => setModalOpen(false)} setIsLogged={setIsLogged} />
+        <Modal
+          closeModal={() => setModalOpen(false)}
+          setIsLogged={setIsLogged}
+          users={users}
+          setUsers={setUsers}
+        />
       )}
     </header>
   );

@@ -3,126 +3,83 @@ import style from "./PetStories.module.css";
 import Container from "../Container/Container";
 
 export default function PetStories() {
-  const API_KEY_NEWS = import.meta.env.VITE_GNEWS_API_KEY;
-
   const [petStories, setPetStories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [after, setAfter] = useState(null); // для Reddit пагінації
   const [hasMore, setHasMore] = useState(true);
-  const [usingMock, setUsingMock] = useState(false); 
 
-  // Fallback-новини
-  const mockStories = [
-    { title: "Hero Dog Saves Family From Fire", url: "#", image: "https://images.unsplash.com/photo-1558788353-f76d92427f16" },
-    { title: "Cat Travels 200 Miles To Return Home", url: "#", image: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba" },
-    { title: "Pet Therapy Helps Kids In Hospitals", url: "#", image: null },
-    { title: "Golden Retriever Becomes Internet Star", url: "#", image: "https://images.unsplash.com/photo-1552053831-71594a27632d" },
-    { title: "Rescue Puppy Finds Forever Home", url: "#", image: null },
+  const localFallback = [
+    { title: "Local Cat Story", url: "#", image: "https://placekitten.com/305/200" }
   ];
 
-  useEffect(() => {
-    const fetchPetStories = async () => {
-      if (!API_KEY_NEWS) {
-        setError({ message: "API key missing" });
-        setPetStories(mockStories);
-        setHasMore(false);
-        setUsingMock(true);
-        return;
-      }
+  const fetchStories = async () => {
+    setLoading(true);
 
-      setLoading(true);
-      setError(null);
+    try {
+      // Reddit API
+      const url = `https://www.reddit.com/r/cats/top.json?limit=5${
+        after ? `&after=${after}` : ""
+      }`;
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const newStories = data.data.children.map(post => ({
+        title: post.data.title,
+        url: "https://reddit.com" + post.data.permalink,
+        image: post.data.preview?.images[0]?.source?.url.replace(/&amp;/g, "&")
+               || `https://placekitten.com/300/200`
+      }));
+
+      setPetStories(prev => [...prev, ...newStories]);
+      setAfter(data.data.after);
+      setHasMore(Boolean(data.data.after));
+
+    } catch (err) {
+      console.log("Reddit failed, fallback to backend...", err);
 
       try {
-        const response = await fetch(
-          `https://gnews.io/api/v4/search?q=(pet OR dog OR cat)&lang=en&max=5&page=${page}&token=${API_KEY_NEWS}`
-        );
-        const data = await response.json();
-
-        if (!response.ok || data.errors) {
-          throw new Error(data.errors?.[0] || "API error / limit reached");
-        }
-
-        if (data.articles && data.articles.length > 0) {
-          setPetStories(prev => {
-            const merged = [...prev, ...data.articles];
-            const unique = Array.from(new Map(merged.map(a => [a.url, a])).values());
-            return unique;
-          });
-          setHasMore(data.articles.length >= 5);
-          setUsingMock(false); // Ми отримали реальні новини
-        } else {
-          if (!usingMock) setPetStories(mockStories);
-          setHasMore(false);
-          setUsingMock(true);
-        }
-      } catch (err) {
-        console.log("API error:", err);
-        if (!usingMock) setPetStories(mockStories);
-        setError(err);
+        const backendRes = await fetch("http://127.0.0.1:5000/api/pet-stories");
+        const backendData = await backendRes.json();
+        setPetStories(prev => [...prev, ...backendData]);
         setHasMore(false);
-        setUsingMock(true);
-      } finally {
-        setLoading(false);
+      } catch {
+        console.log("Backend unavailable, showing local fallback");
+        setPetStories(prev => [...prev, ...localFallback]);
+        setHasMore(false);
       }
-    };
-
-    fetchPetStories();
-  }, [page, API_KEY_NEWS]);
-
-  const handleLoadMore = () => {
-    if (!loading && hasMore) setPage(prev => prev + 1);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    fetchStories();
+  }, []);
 
   return (
     <section className={style.petStories}>
       <Container>
-        <h2 className={style.petStories__title}>Pet Stories</h2>
+        <h2 className={style.petStories__title}>Cat Stories 🐱</h2>
 
-        {loading && page === 1 && <p>Loading...</p>}
+        {loading && petStories.length === 0 && <p>Loading...</p>}
 
-        {error && usingMock && (
-          <p className={style.error}>
-            Не вдалося завантажити новини 😢 <br />
-            Показані тестові історії
-          </p>
-        )}
+        <div className={style.petStories__grid}>
+          {petStories.map((story, i) => (
+            <div key={i} className={style.petStories__item}>
+              <img src={story.image} alt={story.title} />
+              <h3>
+                <a href={story.url} target="_blank" rel="noopener noreferrer">
+                  {story.title}
+                </a>
+              </h3>
+            </div>
+          ))}
+        </div>
 
-        {!loading && petStories.length === 0 && !error && (
-          <p>No stories found</p>
-        )}
-
-        {petStories.length > 0 && (
-          <div className={style.petStories__grid}>
-            {petStories.map((story, index) => (
-              <div key={`${story.url}-${index}`} className={style.petStories__item}>
-                {story.image ? (
-                  <img src={story.image} alt={story.title} />
-                ) : (
-                  <div className={style.placeholder}>
-                    <img src="/placeholder.png" alt="No image available" />
-                  </div>
-                )}
-                <h3>
-                  <a
-                    className={style.petStories__link}
-                    href={story.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {story.title}
-                  </a>
-                </h3>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {hasMore && petStories.length > 0 && (
+        {hasMore && (
           <button
             className={style.petStories__btn}
-            onClick={handleLoadMore}
+            onClick={fetchStories}
             disabled={loading}
           >
             {loading ? "Loading..." : "Load More"}
