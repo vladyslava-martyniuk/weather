@@ -2,9 +2,12 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # дозволяє запити з GitHub Pages
+CORS(app)
 
-# Моки котячих постів (можна підставити топові Reddit пости)
+@app.route("/")
+def home():
+    return "Cat backend working 🐱"
+
 mock_stories = [
     {
         "title": "Hero Cat Saves Family From Fire",
