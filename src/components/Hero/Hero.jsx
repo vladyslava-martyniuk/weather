@@ -11,7 +11,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState("");
 
-  // Підтягуємо Kyiv при першому рендері
+
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
@@ -66,7 +66,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
 
     const newCity = input.trim();
     setCity(newCity);
-    setSelectedCity(newCity); // робимо його активним
+    setSelectedCity(newCity); 
     fetchWeather(newCity);
     setInput("");
   };

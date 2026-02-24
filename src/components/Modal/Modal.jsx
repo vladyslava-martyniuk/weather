@@ -44,7 +44,7 @@ export default function Modal({ closeModal, setIsLogged, users, setUsers }) {
         return;
       }
 
-      setUsers([...users, { username, email, password }]); // додаємо нового користувача
+      setUsers([...users, { username, email, password }]);
     }
 
     setIsLogged(true);
