@@ -57,10 +57,11 @@ export default function WeatherCard({
           ❤️
         </button>
       
-        <button onClick={() => onDelete(data.id)}>🗑 </button>
-
+        
     
         <button onClick={() => onSelectCity(data.name)}>📌</button>
+
+        <button onClick={onDelete}>🗑️</button>
       </div>
     </div>
   );

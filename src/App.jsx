@@ -11,7 +11,7 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  const API_KEY_NEWS = import.meta.env.VITE_GNEWS_API_KEY;
+  
   const [city, setCity] = useState("Kyiv");
   const [selectedCity, setSelectedCity] = useState(null);
   const [weatherList, setWeatherList] = useState([]);
@@ -41,7 +41,7 @@ function App() {
           </div>
         )}
 
-        <PetStories apiKey={API_KEY_NEWS} />
+        <PetStories />
         <Slider />
       </main>
 
