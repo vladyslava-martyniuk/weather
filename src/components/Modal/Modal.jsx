@@ -30,12 +30,16 @@ export default function Modal({ closeModal, setIsLogged, users, setUsers }) {
     }
 
     if (isLogin) {
+      // Логін
       const user = users.find((u) => u.email === email && u.password === password);
       if (!user) {
         setError("Невірний email або пароль!");
         return;
       }
+      setIsLogged(true);
+      handleClose();
     } else {
+      // Реєстрація
       const duplicate = users.find(
         (u) => u.email === email || u.username === username
       );
@@ -44,11 +48,12 @@ export default function Modal({ closeModal, setIsLogged, users, setUsers }) {
         return;
       }
 
-      setUsers([...users, { username, email, password }]);
+     
+      const newUser = { username, email, password };
+      setUsers([...users, newUser]);
+      setIsLogged(true); 
+      handleClose();
     }
-
-    setIsLogged(true);
-    handleClose();
   };
 
   return (
