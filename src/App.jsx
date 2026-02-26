@@ -27,18 +27,6 @@ function App() {
   });
 
  
-  useEffect(() => {
-    const savedIsLogged = localStorage.getItem('isLogged');
-    if (savedIsLogged === 'true') {
-      setIsLogged(true);
-    }
-  }, []);
-
-
-  useEffect(() => {
-    localStorage.setItem('isLogged', isLogged);
-  }, [isLogged]);
-
 
   useEffect(() => {
     localStorage.setItem('users', JSON.stringify(users));

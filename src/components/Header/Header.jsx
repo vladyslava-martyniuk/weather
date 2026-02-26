@@ -15,6 +15,7 @@ export default function Header({ isLogged, setIsLogged, users, setUsers }) {
 
   const handleLogout = () => {
     setIsLogged(false);
+    localStorage.removeItem('isLogged');
     setMobileMenuOpen(false);
   };
 
