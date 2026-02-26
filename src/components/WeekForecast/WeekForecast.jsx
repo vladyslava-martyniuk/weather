@@ -58,7 +58,7 @@ export default function WeatherDailyList({ city, apiKey }) {
   return (
     <section className={style.forecastBlock} id="weeklyForecast">
       <Container>
-      <h3 className={style.title}>8-day Forecast for {city}</h3>
+      <h3 className={style.title}>5-day Forecast for {city}</h3>
 
       {forecast.map((day) => (
         <div key={day.id} className={style.row}>
