@@ -10,10 +10,11 @@ import Slider from "./components/Slider/Slider";
 import Footer from "./components/Footer/Footer";
 
 function App() {
+  const defaultCity = "Kyiv";
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
-  const [city, setCity] = useState("Kyiv");
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [city, setCity] = useState(defaultCity);
+  const [selectedCity, setSelectedCity] = useState(defaultCity);
   const [weatherList, setWeatherList] = useState([]);
   const [isLogged, setIsLogged] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -34,10 +35,12 @@ function App() {
     if (currentUser) {
       const saved = localStorage.getItem(`weatherList_${currentUser}`);
       setWeatherList(saved ? JSON.parse(saved) : []);
+    } else {
+      setWeatherList([]); 
     }
   }, [currentUser]);
 
-  
+
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem(
@@ -62,6 +65,7 @@ function App() {
         setWeatherList={setWeatherList}
         setCurrentUser={setCurrentUser}
         setSelectedCity={setSelectedCity}
+        defaultCity={defaultCity} // передаємо дефолтне місто
       />
 
       <main>

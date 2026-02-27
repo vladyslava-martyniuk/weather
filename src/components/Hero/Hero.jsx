@@ -11,15 +11,12 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
   const [favorites, setFavorites] = useState([]);
   const [error, setError] = useState("");
 
+  const defaultCity = "Kyiv";
+
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("favorites")) || [];
     setFavorites(saved);
-
-    if (weatherList.length === 0) {
-      fetchWeather("Kyiv");
-      setSelectedCity("Kyiv");
-    }
   }, []);
 
   useEffect(() => {
@@ -66,7 +63,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
 
     const newCity = input.trim();
     setCity(newCity);
-    setSelectedCity(newCity); 
+    setSelectedCity(newCity);
     fetchWeather(newCity);
     setInput("");
   };
@@ -84,13 +81,22 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
 
     const removedCity = weatherList.find(w => w.id === cityId);
     if (removedCity && selectedCity === removedCity.name) {
-      setSelectedCity(null);
+      setSelectedCity(defaultCity);
+      fetchWeather(defaultCity);
     }
   };
 
   const handleSelect = (cityName) => {
     setSelectedCity(cityName);
   };
+
+
+  useEffect(() => {
+    if (weatherList.length === 0) {
+      setSelectedCity(defaultCity);
+      fetchWeather(defaultCity);
+    }
+  }, [weatherList]);
 
   return (
     <section className={style.hero}>
@@ -113,12 +119,12 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
             </picture>
           </button>
         </div>
+
         <div className={style.hero__date}>
           <span>{new Date().toLocaleString("en-US", { month: "long", year: "numeric" })}</span>
-          <span>
-            {new Date().toLocaleString("en-US", { weekday: "long", day: "numeric" })}
-          </span>
+          <span>{new Date().toLocaleString("en-US", { weekday: "long", day: "numeric" })}</span>
         </div>
+
         {error && <p className={style.error}>{error}</p>}
 
         <ul className={style.cardsContainer}>
@@ -131,7 +137,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
               onRemoveFavorite={removeFavorite}
               onDelete={() => deleteCity(weather.id)}
               onSelectCity={handleSelect}
-              activeCity={selectedCity} 
+              activeCity={selectedCity}
             />
           ))}
         </ul>

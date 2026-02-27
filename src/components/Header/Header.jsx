@@ -9,16 +9,27 @@ import logoDesk from '../../images/header/header_logo_desk.png';
 import UserDesk from '../../images/header/header_user_desk.png';
 import UserTabAndMob from '../../images/header/header_user_tab_and_mob.png';
 
-export default function Header({ isLogged, setIsLogged, users, setUsers, setCurrentUser,  setWeatherList,  setSelectedCity }) {
+
+export default function Header({
+  isLogged,
+  setIsLogged,
+  users,
+  setUsers,
+  currentUser,
+  setCurrentUser,
+  setWeatherList,
+  setSelectedCity,
+  defaultCity
+}) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     setIsLogged(false);
-    setCurrentUser(null);
-    setWeatherList([]);
+    setCurrentUser(null);          
+    setWeatherList([]);            
+    setSelectedCity(defaultCity);    
     setMobileMenuOpen(false);
-    setSelectedCity(null);
   };
 
   const NavAuth = ({ isMobile }) => (
