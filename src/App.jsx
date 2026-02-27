@@ -11,35 +11,57 @@ import Footer from "./components/Footer/Footer";
 
 function App() {
   const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
-  
+
   const [city, setCity] = useState("Kyiv");
   const [selectedCity, setSelectedCity] = useState(null);
   const [weatherList, setWeatherList] = useState([]);
   const [isLogged, setIsLogged] = useState(false);
-  
+  const [currentUser, setCurrentUser] = useState(null);
+
   const [users, setUsers] = useState(() => {
-    const savedUsers = localStorage.getItem('users');
-    return savedUsers ? JSON.parse(savedUsers) : [
-      { username: "Vlad", email: "vlad@example.com", password: "123456" },
-      { username: "Anna", email: "anna@example.com", password: "password" },
-      { username: "John", email: "john@example.com", password: "qwerty" },
-    ];
+    const savedUsers = localStorage.getItem("users");
+    return savedUsers
+      ? JSON.parse(savedUsers)
+      : [
+          { username: "Vlad", email: "vlad@example.com", password: "123456" },
+          { username: "Anna", email: "anna@example.com", password: "password" },
+          { username: "John", email: "john@example.com", password: "qwerty" },
+        ];
   });
 
- 
- 
 
   useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(users));
+    if (currentUser) {
+      const saved = localStorage.getItem(`weatherList_${currentUser}`);
+      setWeatherList(saved ? JSON.parse(saved) : []);
+    }
+  }, [currentUser]);
+
+  
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(
+        `weatherList_${currentUser}`,
+        JSON.stringify(weatherList)
+      );
+    }
+  }, [weatherList, currentUser]);
+
+
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify(users));
   }, [users]);
 
   return (
     <>
-      <Header 
-        isLogged={isLogged} 
+      <Header
+        isLogged={isLogged}
         setIsLogged={setIsLogged}
         users={users}
         setUsers={setUsers}
+        setWeatherList={setWeatherList}
+        setCurrentUser={setCurrentUser}
+        setSelectedCity={setSelectedCity}
       />
 
       <main>
