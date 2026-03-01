@@ -20,7 +20,7 @@ export default function Slider() {
   };
 
   return (
-    <section className={style.slider}>
+    <section className={style.slider}id="nature">
       <Container>
         <h2 className={style.slider__title}>Beautiful nature</h2>
 

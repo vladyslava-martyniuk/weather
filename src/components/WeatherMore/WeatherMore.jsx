@@ -59,7 +59,7 @@ export default function WeatherMore({ city, apiKey }) {
     weather;
 
   return (
-    <section className={style.weatherMore}>
+    <section className={style.weatherMore}id="menu">
       <Container>
         <ul className={style.weather__list}>
           <li className={style.weather__item}>

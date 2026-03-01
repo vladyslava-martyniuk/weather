@@ -56,6 +56,7 @@ export default function Hero({ city, setCity, selectedCity, setSelectedCity, api
     } catch {
       setError("City not found. Please enter the name in English.");
     }
+    
   };
 
   const handleSearch = () => {

@@ -18,7 +18,9 @@ import WhatsappMob from "../../images/footer/footer__whatsapp__mob.png";
 
 export default function Footer() {
   return (
-    <footer className={style.footer}>
+    <footer className={style.footer}
+    id="contacts"
+    >
       <Container>
         <div className={style.footer__inner}>
           
@@ -38,30 +40,33 @@ export default function Footer() {
           <div className={style.footer__social}>
             <ul className={style.social__list}>
               
+          <li>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+              <picture>
+                <source srcSet={InstagramDesk} media="(min-width: 1024px)" />
+                <source srcSet={InstagramTab} media="(min-width: 768px)" />
+                <img src={InstagramMob} alt="Instagram" />
+              </picture>
+            </a>
+          </li>
               <li>
-                <picture>
-                  <source srcSet={InstagramDesk} media="(min-width: 1024px)" />
-                  <source srcSet={InstagramTab} media="(min-width: 768px)" />
-                  <img src={InstagramMob} alt="Instagram" />
-                </picture>
-              </li>
+  <a href="https://www.facebook.com/home.php" target="_blank" rel="noopener noreferrer">
+    <picture>
+      <source srcSet={FacebookDesk} media="(min-width: 1024px)" />
+      <source srcSet={FacebookTab} media="(min-width: 768px)" />
+      <img src={FacebookMob} alt="Facebook" />
+    </picture>
+  </a>
+</li>
 
               <li>
-                <picture>
-                  <source srcSet={FacebookDesk} media="(min-width: 1024px)" />
-                  <source srcSet={FacebookTab} media="(min-width: 768px)" />
-                  <img src={FacebookMob} alt="Facebook" />
-                </picture>
-              </li>
-
-              <li>
+                <a href="https://www.whatsapp.com/" target="_blank">
                 <picture>
                   <source srcSet={WhatsappDesk} media="(min-width: 1024px)" />
                   <source srcSet={WhatsappTab} media="(min-width: 768px)" />
-                  <img src={WhatsappMob} alt="Whatsapp" />
-                </picture>
+                  <img src={WhatsappMob} alt="WhatsApp" />
+                </picture></a>
               </li>
-
             </ul>
           </div>
 

@@ -37,17 +37,17 @@ export default function Header({
       <nav className={isMobile ? style.header__mobile__nav : style.header__nav}>
         <ul className={isMobile ? style.header__mobile__list : style.header__list}>
           <li className={isMobile ? style.header__mobile__item : style.header__item}>
-            <a className={isMobile ? style.header__mobile__link : style.header__link} href="">
-              Who we are
+            <a className={isMobile ? style.header__mobile__link : style.header__link} href="#nature">
+              Beatiful nature
             </a>
           </li>
           <li className={isMobile ? style.header__mobile__item : style.header__item}>
-            <a className={isMobile ? style.header__mobile__link : style.header__link} href="">
+            <a className={isMobile ? style.header__mobile__link : style.header__link} href="#contacts">
               Contacts
             </a>
           </li>
           <li className={isMobile ? style.header__mobile__item : style.header__item}>
-            <a className={isMobile ? style.header__mobile__link : style.header__link} href="">
+            <a className={isMobile ? style.header__mobile__link : style.header__link} href="#menu">
               Menu
             </a>
           </li>
