@@ -1,9 +1,9 @@
 {
-  "name": "Weather Dashboard",
+  "name": "Weather-Dashboard",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "homepage": "https://vladyslava-martyniuk.github.io/Weather Dashboard/",
+  "homepage": "https://vladyslava-martyniuk.github.io/Weather-Dashboard/",
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
